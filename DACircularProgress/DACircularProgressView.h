@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_10_0
 @interface DACircularProgressView : UIView
-
+#else
+@interface DACircularProgressView : UIView <CAAnimationDelegate>
+#endif
 @property(nonatomic, strong) UIColor *trackTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *progressTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong) UIColor *innerTintColor UI_APPEARANCE_SELECTOR;

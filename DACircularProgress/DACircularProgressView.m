@@ -45,11 +45,11 @@
 {
     CGRect rect = self.bounds;
     CGPoint centerPoint = CGPointMake(rect.size.width / 2.0f, rect.size.height / 2.0f);
-    CGFloat radius = MIN(rect.size.height, rect.size.width) / 2.0f;
+    CGFloat radius = fmin(rect.size.height, rect.size.width) / 2.0f;
     
     BOOL clockwise = (self.clockwiseProgress != 0);
     
-    CGFloat progress = MIN(self.progress, 1.0f - FLT_EPSILON);
+    CGFloat progress = fmin(self.progress, 1.0f - FLT_EPSILON);
     CGFloat radians = 0;
     if (clockwise) {
         radians = (float)((progress * 2.0f * M_PI) - M_PI_2);
@@ -191,7 +191,7 @@
            animated:(BOOL)animated
        initialDelay:(CFTimeInterval)initialDelay
 {
-    CGFloat pinnedProgress = MIN(MAX(progress, 0.0f), 1.0f);
+    CGFloat pinnedProgress = fmin(fmax(progress, 0.0f), 1.0f);
     [self setProgress:progress
              animated:animated
          initialDelay:initialDelay
@@ -206,7 +206,7 @@
     [self.layer removeAnimationForKey:@"indeterminateAnimation"];
     [self.circularProgressLayer removeAnimationForKey:@"progress"];
     
-    CGFloat pinnedProgress = MIN(MAX(progress, 0.0f), 1.0f);
+    CGFloat pinnedProgress = fmin(fmax(progress, 0.0f), 1.0f);
     if (animated) {
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"progress"];
         animation.duration = duration;
@@ -283,7 +283,7 @@
 
 - (void)setThicknessRatio:(CGFloat)thicknessRatio
 {
-    self.circularProgressLayer.thicknessRatio = MIN(MAX(thicknessRatio, 0.f), 1.f);
+    self.circularProgressLayer.thicknessRatio = fmin(fmax(thicknessRatio, 0.f), 1.f);
     [self.circularProgressLayer setNeedsDisplay];
 }
 
